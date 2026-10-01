@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>공채 캘린더</title>
+<meta name="description" content="2021~2026년 로봇·대기업 신입/경력 공채 일정을 달력과 리스트로 보고, 공고 원문으로 바로 이동하고, 내 지원 현황까지 관리하는 캘린더.">
+<meta name="theme-color" content="#F2F4F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="공채 캘린더">
+<meta property="og:description" content="로봇·대기업 공채 일정, 마감까지 남은 기간, 공고 바로가기, 내 지원 현황.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wanted-sans@1.0.3/fonts/webfonts/variable/split/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css?v=202610011705">
+<script>
+  /* 테마를 첫 페인트 전에 적용해 깜빡임 방지 */
+  try { var t = localStorage.getItem("rc.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="site-header">
+  <div class="hd-inner">
+    <a class="brand" href="#/" aria-label="공채 캘린더 홈">
+      <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#3182F6"/><rect x="6" y="9" width="10" height="3.2" rx="1.6" fill="#fff"/><rect x="10" y="15.8" width="12" height="3.2" rx="1.6" fill="#fff" opacity=".7"/></svg>
+      <span class="brand-name">공채 캘린더</span>
+    </a>
+    <nav class="main-nav" aria-label="주요 메뉴">
+      <a href="#/" data-route="home">홈</a>
+      <a href="#/calendar" data-route="calendar">달력</a>
+      <a href="#/list" data-route="list">전체 공고</a>
+      <a href="#/trend" data-route="trend">최근 5년간 추세</a>
+      <a href="#/always" data-route="always">상시채용</a>
+      <a href="#/my" data-route="my">내 지원현황</a>
+    </nav>
+    <div class="hd-tools">
+      <div class="seg" id="scopeSeg" role="group" aria-label="직무 범위">
+        <button type="button" data-v="mech">기계 직무</button>
+        <button type="button" data-v="all">전체</button>
+      </div>
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="테마 바꾸기" title="테마 바꾸기"></button>
+      <div id="authSlot"></div>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site-footer">
+  <div class="ft-inner">
+    <div>
+      <strong>공채 캘린더</strong>
+      <p id="ftUpdated"></p>
+      <p>날짜는 각 기업 공고·채용 페이지 기준입니다. 지원 전에 공고 원문에서 마감 시각을 꼭 다시 확인하세요.</p>
+    </div>
+    <nav aria-label="하단 메뉴" class="ft-nav">
+      <a href="#/trend">최근 5년간 추세</a>
+      <a href="#/about">사이트 안내 · 출처</a>
+      <a href="#/my">내 지원현황</a>
+    </nav>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="모바일 메뉴">
+  <a href="#/" data-route="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9.5 20v-6h5v6"/></svg>홈</a>
+  <a href="#/calendar" data-route="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>달력</a>
+  <a href="#/list" data-route="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.5 6.5H20M8.5 12H20M8.5 17.5H20"/><circle cx="4.5" cy="6.5" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="17.5" r="1" fill="currentColor"/></svg>공고</a>
+  <a href="#/my" data-route="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-6-4-6 4z"/></svg>내 지원</a>
+</nav>
+
+<dialog id="detail" aria-labelledby="dTitle"></dialog>
+<dialog id="loginDlg" aria-labelledby="lgTitle"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/config.js?v=202610011705"></script>
+<script src="data/recruits.js?v=202610011705"></script>
+<script src="assets/store-local.js?v=202610011705"></script>
+<script src="assets/app.js?v=202610011705"></script>
+</body>
+</html>
