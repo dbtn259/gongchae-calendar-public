@@ -492,3 +492,5 @@ dialog::backdrop{background:var(--scrim);backdrop-filter:blur(2px)}
   .hm .hm-co{min-width:120px}
   .hm .hm-co .av{display:none}
 }
+.f-hint{font-size:13px;color:var(--ink-4);font-weight:550}
+@media (max-width:760px){.f-hint{width:100%}}

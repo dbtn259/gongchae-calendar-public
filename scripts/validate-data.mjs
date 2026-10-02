@@ -25,6 +25,7 @@ RECRUITS.forEach((x, i) => {
   if (ids.has(x.id)) errors.push(`${at}: id 중복`); ids.add(x.id);
   for (const k of ["company", "title", "jobs"]) if (!x[k] || typeof x[k] !== "string") errors.push(`${at}: ${k} 비어 있음`);
   if (!["robot", "big"].includes(x.group)) errors.push(`${at}: group은 robot|big`);
+  if (!["high", "college", "bachelor", "master"].includes(x.edu)) errors.push(`${at}: edu는 high|college|bachelor|master`);
   for (const k of ["mech", "exp"]) if (typeof x[k] !== "boolean") errors.push(`${at}: ${k}는 true|false`);
   if (x.start !== null && !okDate(x.start || "")) errors.push(`${at}: start는 YYYY-MM-DD 또는 null`);
   if (!okDate(x.end || "")) errors.push(`${at}: end는 YYYY-MM-DD`);

@@ -15,6 +15,7 @@
 3. 새 항목 추가 / 바뀐 날짜 수정. 기존 `id` 는 절대 바꾸지 않는다.
    - `id` 형식: `기업영문-연도+시기` (예: `samsung-2027h1`, `lg-2026-06`)
    - `mech`: 설계·R&D·생산기술·품질·설비 직무 모집이면 `true`
+   - `edu`: 공고의 최소 지원 학력 — `high`(고졸) / `college`(초대졸·전문학사) / `bachelor`(4년제 학사) / `master`(석사). 공고에서 확인한 값으로 넣는다
    - `url`: 해당 공고로 바로 가는 링크, `source`: 날짜를 확인한 페이지
 4. `RECRUIT_META.updated` 를 오늘 날짜로 바꾼다.
 5. `node scripts/validate-data.mjs` 를 실행해 통과하는지 확인한다.

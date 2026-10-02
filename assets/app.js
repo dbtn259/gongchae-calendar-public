@@ -65,7 +65,7 @@
   /* ───────── 상태 ───────── */
   const state = {
     scope: Prefs.get("scope", "mech"),
-    f: { group: "", status: "", type: "", mine: "", q: "", year: String(TODAY.getFullYear()) },
+    f: { group: "", status: "", type: "", mine: "", q: "", year: String(TODAY.getFullYear()), edu: Prefs.get("edu", "") },
     tlYear: TODAY.getFullYear(),
     sort: Prefs.get("sort", "deadline"),
     month: new Date(TODAY.getFullYear(), TODAY.getMonth(), 1),
@@ -80,11 +80,12 @@
   const scoped = (year) => DATA.filter(x => (state.scope === "all" || x.mech) && (year == null || yearOf(x) === year));
   const hasRec = id => { const r = Store.get(id); return !!(r && r.status); };
   function filtered(opts = {}) {
-    const { group, status: st, type, mine, q, year } = state.f;
+    const { group, status: st, type, mine, q, year, edu } = state.f;
     const qq = q.trim().toLowerCase();
     return scoped().filter(x => {
       if (!opts.ignoreYear && year && yearOf(x) !== +year) return false;
       if (group && x.group !== group) return false;
+      if (edu && EDU_RANK[x.edu || "bachelor"] > EDU_RANK[edu]) return false;
       if (!opts.ignoreStatus && st && status(x) !== st) return false;
       if (type === "new" && x.exp) return false;
       if (type === "exp" && !x.exp) return false;
@@ -93,6 +94,9 @@
       return true;
     });
   }
+  /* 학력: 공고의 최소 지원 학력. 필터는 "내 학력으로 지원 가능한 공고" */
+  const EDU_RANK = { high: 1, college: 2, bachelor: 3, master: 4 };
+  const EDU_LABEL = { high: "고졸 이상", college: "초대졸(전문학사) 이상", bachelor: "대졸(4년제) 이상", master: "석사 이상" };
   const byDeadline = (a, b) => a.end.localeCompare(b.end);
 
   /* ───────── 공통 조각 ───────── */
@@ -131,7 +135,8 @@
     group: [["", "전체"], ["robot", "로봇기업"], ["big", "대기업"]],
     status: [["", "전체"], ["open", "접수중"], ["soon", "예정"], ["closed", "마감"]],
     type: [["", "전체"], ["new", "신입만"], ["exp", "경력 포함"]],
-    year: [...YEARS.map(y => [String(y), `${y}년`]), ["", "모든 연도"]]
+    year: [...YEARS.map(y => [String(y), `${y}년`]), ["", "모든 연도"]],
+    edu: [["", "전체"], ["high", "고졸"], ["college", "초대졸"], ["bachelor", "대졸"], ["master", "석사"]]
   };
   function filterBar(opts) {
     const group = (key, label) => `<div class="f-group" role="group" aria-label="${label}"><span>${label}</span><div class="chips">${CHIPS[key].map(([v, t]) => `<button type="button" class="chip-btn" data-f="${key}" data-v="${v}" aria-pressed="${state.f[key] === v}">${t}</button>`).join("")}</div></div>`;
@@ -141,12 +146,14 @@
         <button type="button" class="chip-btn" data-f="mine" data-v="${state.f.mine ? "" : "1"}" aria-pressed="${!!state.f.mine}">내가 기록한 공고만</button>
       </div>
       ${opts.year ? `<div class="f-row">${group("year", "연도")}</div>` : ""}
+      <div class="f-row">${group("edu", "내 학력")}<span class="f-hint">고르면 그 학력으로 지원할 수 있는 공고만 보여줘요</span></div>
       <div class="f-row">${group("group", "구분")}${opts.status ? group("status", "상태") : ""}${group("type", "대상")}</div>
     </div>`;
   }
   function bindFilters(onChange) {
     main.querySelectorAll(".filters .chip-btn").forEach(b => b.addEventListener("click", () => {
       state.f[b.dataset.f] = b.dataset.v;
+      if (b.dataset.f === "edu") Prefs.set("edu", b.dataset.v);
       main.querySelectorAll(`.chip-btn[data-f="${b.dataset.f}"]`).forEach(o => {
         if (b.dataset.f === "mine") { o.setAttribute("aria-pressed", String(!!state.f.mine)); o.dataset.v = state.f.mine ? "" : "1"; }
         else o.setAttribute("aria-pressed", String(o.dataset.v === state.f[b.dataset.f]));
@@ -377,7 +384,13 @@
       const rows = filtered().sort(SORTS[state.sort][1]);
       $("#count").innerHTML = `공고 <b class="num">${rows.length}</b>건`;
       const out = $("#listOut");
-      if (!rows.length) { out.innerHTML = `<div class="empty"><b>조건에 맞는 공고가 없어요.</b><span>필터를 하나씩 풀거나, 위쪽에서 ‘전체’ 보기로 바꿔 보세요.</span></div>`; return; }
+      if (!rows.length) {
+        const lowEdu = state.f.edu === "high" || state.f.edu === "college";
+        out.innerHTML = lowEdu
+          ? `<div class="empty"><b>${state.f.edu === "high" ? "고졸" : "초대졸"}로 지원할 수 있는 공채가 아직 없어요.</b><span>대기업 대졸 공채는 대부분 4년제 학사 이상을 요구해요. 생산·기술직이나 수시채용에서 학력 제한이 낮은 공고가 나오면 여기에 표시돼요.</span><a class="btn btn-sm" href="#/always">상시채용 기업 보기</a></div>`
+          : `<div class="empty"><b>조건에 맞는 공고가 없어요.</b><span>필터를 하나씩 풀거나, 위쪽에서 ‘전체’ 보기로 바꿔 보세요.</span></div>`;
+        return;
+      }
       if (matchMedia("(max-width:760px)").matches) { out.innerHTML = `<div class="rows">${rows.map(row).join("")}</div>`; return; }
       out.innerHTML = `<div class="table-sheet"><table>
         <thead><tr><th>남은 기간</th><th>기업과 공고</th><th>서류 접수</th><th>주요 직무</th><th>상태</th><th><span class="sr">공고 원문</span></th></tr></thead>
@@ -506,6 +519,7 @@
           <li>${TODAY.getFullYear()}년 로봇기업과 대기업의 신입·경력 공채 서류 접수 기간, 그리고 공고 원문 링크</li>
           <li><b>기계 직무</b>는 설계·연구개발·생산기술·품질·설비 직무를 뽑는 공고만, <b>전체</b>는 모든 공채를 보여줍니다.</li>
           <li>접수중·예정·마감과 남은 기간은 접속한 날짜로 자동 계산됩니다.</li>
+          <li><b>내 학력</b> 필터는 공고에 적힌 최소 지원 학력을 기준으로, 고른 학력으로 지원할 수 있는 공고만 보여줍니다. 대기업 대졸 공채는 대부분 4년제 학사 이상입니다.</li>
           <li>새 공고는 매주 월요일 아침에 확인해 추가합니다.</li>
         </ul>
         <h2>지원 기록은 어디에 저장되나요</h2>
@@ -537,6 +551,7 @@
           <dt>서류 마감</dt><dd>${full(x.end)}</dd>
           <dt>모집 직무</dt><dd>${esc(x.jobs)}</dd>
           <dt>대상</dt><dd>${x.exp ? "신입, 경력" : "신입"}</dd>
+          <dt>지원 학력</dt><dd>${EDU_LABEL[x.edu || "bachelor"]}</dd>
           ${x.source && x.source !== x.url ? `<dt>날짜 출처</dt><dd><a class="link" href="${esc(x.source)}" target="_blank" rel="noopener">확인한 페이지 보기</a></dd>` : ""}
         </dl>
         <div class="actions">
