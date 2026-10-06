@@ -19,7 +19,7 @@
  * 형식 확인:  node scripts/validate-data.mjs
  */
 window.RECRUIT_META = {
-  updated: "2026-10-05",
+  updated: "2026-10-07",
   note: "2021~2026년 로봇·대기업 공채"
 };
 
@@ -152,7 +152,8 @@ window.RECRUITS = [
   { id: "cj-2026h2", company: "CJ그룹", title: "2026 하반기 신입 공채", group: "big", mech: false, exp: false, edu: "bachelor", start: "2026-09-16", end: "2026-09-30", jobs: "계열사별 전 직무", url: "https://linkareer.com/activity/351099", source: "https://community.linkareer.com/employment_data/6297919" },
   { id: "mobis-robotics-2026h2", company: "현대모비스", title: "[로보틱스] 26년 하반기 로보틱스 집중 채용 (신입·경력)", group: "robot", mech: true, exp: true, edu: "bachelor", start: "2026-09-11", end: "2026-09-29", jobs: "액추에이터 시스템/기구 설계·모터·회로·제어기 SW·시작개발·평가·생산기술", url: "https://mobisrobotics-recruit.com/", source: "https://stat.snu.ac.kr/32694/" },
   { id: "lignex1-2026h2", company: "LIG넥스원", title: "2026 하반기 LIG D&A 인재영입 (신입·인턴)", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-08-31", end: "2026-09-13", jobs: "HW·SW·기계 R&D·생산기술·품질·공정기술·사업", url: "https://linkareer.com/activity/346680", source: "https://www.ligdna-2026.com/" },
-  { id: "lignex1-exp-2026h2", company: "LIG넥스원", title: "2026 하반기 LIG D&A 경력 인재영입", group: "big", mech: true, exp: true, edu: "bachelor", start: "2026-09-07", end: "2026-09-27", jobs: "SW·HW·체계·생산/품질 등 경력 (2년 이상)", url: "https://www.ligdna-2026.com/", source: "https://www.ligdna-2026.com/" }
+  { id: "lignex1-exp-2026h2", company: "LIG넥스원", title: "2026 하반기 LIG D&A 경력 인재영입", group: "big", mech: true, exp: true, edu: "bachelor", start: "2026-09-07", end: "2026-09-27", jobs: "SW·HW·체계·생산/품질 등 경력 (2년 이상)", url: "https://www.ligdna-2026.com/", source: "https://www.ligdna-2026.com/" },
+  { id: "mobis-2026-09", company: "현대모비스", title: "[반도체사업담당] 2026년 9월 연구직 신입/경력 채용", group: "big", mech: true, exp: true, edu: "bachelor", start: "2026-09-23", end: "2026-10-06", jobs: "SoC·아날로그 회로·Mixed-IC 설계·전력반도체 개발/평가·자율주행 AI", url: "https://linkareer.com/activity/353232", source: "https://careers.mobis.com/jobs-view?seq=4183" }
 ];
 
 /* 정기 공채 없이 수시로 뽑는 곳 — 채용 페이지 바로가기 */
