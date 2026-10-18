@@ -19,7 +19,7 @@
  * 형식 확인:  node scripts/validate-data.mjs
  */
 window.RECRUIT_META = {
-  updated: "2026-10-09",
+  updated: "2026-10-19",
   note: "2021~2026년 로봇·대기업 공채"
 };
 
@@ -156,6 +156,8 @@ window.RECRUITS = [
   { id: "mobis-2026-09", company: "현대모비스", title: "[반도체사업담당] 2026년 9월 연구직 신입/경력 채용", group: "big", mech: true, exp: true, edu: "bachelor", start: "2026-09-23", end: "2026-10-06", jobs: "SoC·아날로그 회로·Mixed-IC 설계·전력반도체 개발/평가·자율주행 AI", url: "https://linkareer.com/activity/353232", source: "https://careers.mobis.com/jobs-view?seq=4183" },
   { id: "mobis-prod-2026-09", company: "현대모비스", title: "[생산개발담당] 26년 9월 관리직 신입채용", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-09-30", end: "2026-10-12", jobs: "스마트팩토리·물류 자동화 설비/관제 운영 분석 (의왕연구소)", url: "https://careers.mobis.com/jobs-view?seq=4189", source: "https://careers.mobis.com/jobs-view?seq=4189" },
   { id: "mobis-2026-10", company: "현대모비스", title: "26년 10월 연구직 신입채용 (전동화/모듈BU·전장BU·FTCI)", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-10-02", end: "2026-10-13", jobs: "컨버터 패키지(기구) 설계·배터리 시스템 개발·열관리 제어·실차/시뮬레이션 평가·제어기 HW/SW", url: "https://careers.mobis.com/jobs-view?seq=4207", source: "https://careers.mobis.com/jobs" },
+  { id: "hanwharobotics-2026-09", company: "한화로보틱스", title: "한화로보틱스 각 부문 경력 채용", group: "robot", mech: true, exp: true, edu: "college", start: "2026-09-14", end: "2026-10-18", jobs: "SI 기구·제어 설계·AGV/AMR 기구 설계/개발·협동로봇 제어 알고리즘·자율주행 SW·현장 엔지니어", url: "https://www.jobkorea.co.kr/Recruit/GI_Read/49966342", source: "https://www.jobkorea.co.kr/Recruit/GI_Read/49966342" },
+  { id: "mobis-semi-2026-10", company: "현대모비스", title: "[반도체사업담당] 26년 10월 연구직 신입채용", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-10-13", end: "2026-10-22", jobs: "반도체 설계 및 시스템 응용 (아날로그·디지털·응용, 강남연구소)", url: "https://careers.mobis.com/jobs-view?seq=4209", source: "https://careers.mobis.com/jobs" },
 ];
 
 /* 정기 공채 없이 수시로 뽑는 곳 — 채용 페이지 바로가기 */
