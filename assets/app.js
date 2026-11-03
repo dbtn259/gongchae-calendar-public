@@ -77,7 +77,15 @@
   const RECENT_N = 5;
   const RECENT = Array.from({ length: RECENT_N }, (_, i) => TODAY.getFullYear() - i); // 내림차순
   const YEARS = RECENT;
-  const scoped = (year) => DATA.filter(x => (state.scope === "all" || x.mech) && (year == null || yearOf(x) === year));
+  /* 직무 범위: 기계는 데이터의 mech 값, 로봇·R&D는 공고명·직무 문구로 판단 */
+  const SCOPES = {
+    mech: x => x.mech,
+    robot: x => x.group === "robot" || /로봇|로보틱스|휴머노이드|AMR|AGV/i.test(x.title + " " + x.jobs),
+    rnd: x => /R&D|연구|개발/i.test(x.title + " " + x.jobs),
+    all: () => true
+  };
+  if (!SCOPES[state.scope]) state.scope = "mech";
+  const scoped = (year) => DATA.filter(x => SCOPES[state.scope](x) && (year == null || yearOf(x) === year));
   const hasRec = id => { const r = Store.get(id); return !!(r && r.status); };
   function filtered(opts = {}) {
     const { group, status: st, type, mine, q, year, edu } = state.f;
@@ -162,9 +170,13 @@
     }));
     const q = $("#fQ", main); if (q) q.addEventListener("input", () => { state.f.q = q.value; onChange(); });
   }
-  const scopeLine = () => state.scope === "mech"
-    ? "기계 직무(설계·연구개발·생산기술·품질·설비)를 뽑는 공고만 보고 있어요."
-    : "직무와 상관없이 모든 공채를 보고 있어요.";
+  const SCOPE_LINES = {
+    mech: "기계 직무(설계·연구개발·생산기술·품질·설비)를 뽑는 공고만 보고 있어요.",
+    robot: "로봇 직무(로봇기업·로보틱스 부문·로봇 개발)를 뽑는 공고만 보고 있어요.",
+    rnd: "R&D 직무(연구·개발)를 뽑는 공고만 보고 있어요.",
+    all: "직무와 상관없이 모든 공채를 보고 있어요."
+  };
+  const scopeLine = () => SCOPE_LINES[state.scope] || SCOPE_LINES.all;
 
   /* ───────── 올해 공채 흐름: 기업별 간트 도면 ───────── */
   function timelineHtml() {
@@ -517,7 +529,7 @@
         <h2>무엇을 보여주나요</h2>
         <ul>
           <li>${TODAY.getFullYear()}년 로봇기업과 대기업의 신입·경력 공채 서류 접수 기간, 그리고 공고 원문 링크</li>
-          <li><b>기계 직무</b>는 설계·연구개발·생산기술·품질·설비 직무를 뽑는 공고만, <b>전체</b>는 모든 공채를 보여줍니다.</li>
+          <li><b>기계 직무</b>는 설계·연구개발·생산기술·품질·설비 직무를, <b>로봇</b>은 로봇기업과 로보틱스 부문·로봇 개발 직무를, <b>R&amp;D</b>는 연구·개발 직무를 뽑는 공고만 보여줍니다. <b>전체</b>는 모든 공채를 보여줍니다.</li>
           <li>접수중·예정·마감과 남은 기간은 접속한 날짜로 자동 계산됩니다.</li>
           <li><b>내 학력</b> 필터는 공고에 적힌 최소 지원 학력을 기준으로, 고른 학력으로 지원할 수 있는 공고만 보여줍니다. 대기업 대졸 공채는 대부분 4년제 학사 이상입니다.</li>
           <li>새 공고는 매주 월요일 아침에 확인해 추가합니다.</li>

@@ -82,6 +82,8 @@ main:focus,main:focus-visible{outline:none}
 .seg{display:inline-flex;padding:3px;gap:2px;background:var(--sunk);border-radius:12px}
 .seg button{border:0;background:transparent;color:var(--ink-3);font-size:13.5px;font-weight:650;padding:6px 12px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .seg button:hover{color:var(--ink)}
+@media (max-width:480px){.seg-long{display:none}.seg button{padding:6px 8px!important}}
+@media (max-width:400px){.hd-inner{gap:8px!important}.hd-tools{gap:4px}.seg button{padding:6px 6px!important;font-size:12.5px!important}}
 .seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(25,31,40,.12)}
 
 /* 버튼 */

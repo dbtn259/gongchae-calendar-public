@@ -17,6 +17,7 @@
    - `mech`: 설계·R&D·생산기술·품질·설비 직무 모집이면 `true`
    - `edu`: 공고의 최소 지원 학력 — `high`(고졸) / `college`(초대졸·전문학사) / `bachelor`(4년제 학사) / `master`(석사). 공고에서 확인한 값으로 넣는다
    - `url`: 해당 공고로 바로 가는 링크, `source`: 날짜를 확인한 페이지
+   - `jobs`: 사이트의 **로봇** 필터는 로봇기업(`group: "robot"`)이거나 공고명·`jobs`에 로봇/로보틱스/휴머노이드/AMR/AGV가 있는 공고, **R&D** 필터는 공고명·`jobs`에 R&D/연구/개발이 있는 공고를 보여준다. 해당 직무를 뽑으면 이 단어를 `jobs`에 적는다
 4. `RECRUIT_META.updated` 를 오늘 날짜로 바꾼다.
 5. `node scripts/validate-data.mjs` 를 실행해 통과하는지 확인한다.
 6. 변경이 있으면 커밋: `공채 데이터 업데이트 YYYY-MM-DD (+추가 n건, 수정 m건)`
