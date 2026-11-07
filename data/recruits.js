@@ -19,7 +19,7 @@
  * 형식 확인:  node scripts/validate-data.mjs
  */
 window.RECRUIT_META = {
-  updated: "2026-11-02",
+  updated: "2026-11-07",
   note: "2021~2026년 로봇·대기업 공채"
 };
 
@@ -160,6 +160,7 @@ window.RECRUITS = [
   { id: "mobis-semi-2026-10", company: "현대모비스", title: "[반도체사업담당] 26년 10월 연구직 신입채용", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-10-13", end: "2026-10-22", jobs: "반도체 설계 및 시스템 응용 (아날로그·디지털·응용, 강남연구소)", url: "https://careers.mobis.com/jobs-view?seq=4209", source: "https://careers.mobis.com/jobs" },
   { id: "mobis-robotics-2026-10", company: "현대모비스", title: "[로보틱스사업실] 26년 10월 연구직 경력채용 (로보틱스 전장기구설계)", group: "robot", mech: true, exp: true, edu: "master", start: "2026-10-22", end: "2026-11-03", jobs: "휴머노이드 액추에이터·그리퍼·제어기 전장/기구 설계·양산 (의왕연구소, 경력 5년 이상·석사 3년 이상)", url: "https://careers.mobis.com/jobs-view?seq=4213", source: "https://careers.mobis.com/jobs-view?seq=4213" },
   { id: "rotem-2026-10", company: "현대로템", title: "10월 수시채용 신입", group: "big", mech: true, exp: false, edu: "bachelor", start: "2026-10-26", end: "2026-11-08", jobs: "기계설계·유무인체계 통합관제 SW 개발·국내사업 프로젝트 관리", url: "https://linkareer.com/activity/359789", source: "https://linkareer.com/activity/359789" },
+  { id: "mobis-pr-2026-10", company: "현대모비스", title: "[기획담당] 언론홍보 신입 (관리직)", group: "big", mech: false, exp: false, edu: "bachelor", start: "2026-10-30", end: "2026-11-09", jobs: "언론홍보 (역삼 본사)", url: "https://careers.mobis.com/index", source: "https://careers.mobis.com/index" },
 ];
 
 /* 정기 공채 없이 수시로 뽑는 곳 — 채용 페이지 바로가기 */
